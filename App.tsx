@@ -6,25 +6,10 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import {appColors} from './src/constansts/appColors';
+import MainNavigator from './src/navigators/MainNavigator';
 
 const styles = StyleSheet.create({
   statusBar: {
@@ -34,15 +19,17 @@ const styles = StyleSheet.create({
 
 function App(): React.JSX.Element {
   return (
-    <SafeAreaView>
+    <>
       <StatusBar
         barStyle={'light-content'}
         backgroundColor={appColors.primary}
+        translucent
       />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Header />
-      </ScrollView>
-    </SafeAreaView>
+
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </>
   );
 }
 

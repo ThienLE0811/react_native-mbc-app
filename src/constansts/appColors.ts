@@ -8,4 +8,5 @@ export const appColors = {
   gray2: '#AAAAAA',
   gray3: '#545454',
   error: '#FF4848',
+  orange: '#EF4E28',
 };

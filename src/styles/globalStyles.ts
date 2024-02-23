@@ -18,7 +18,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: appColors.white,
     paddingHorizontal: 16,
     paddingVertical: 16,
-    minHeight: 56,
+    minHeight: 40,
     flexDirection: 'row',
   },
   section: {
@@ -31,8 +31,7 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    padding: 8,
     borderRadius: 12,
     backgroundColor: appColors.white,
     // margin: 12,

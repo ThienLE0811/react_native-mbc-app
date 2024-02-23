@@ -8,10 +8,11 @@ interface Props {
   children: ReactNode;
   bgColor?: string;
   styles?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 }
 
 const CardComponent = (props: Props) => {
-  const {children, bgColor, styles} = props;
+  const {children, bgColor, styles, onPress} = props;
   return (
     <TouchableOpacity
       style={[
@@ -20,7 +21,9 @@ const CardComponent = (props: Props) => {
           backgroundColor: bgColor ?? appColors.white,
         },
         styles,
-      ]}>
+      ]}
+      activeOpacity={0.7}
+      onPress={onPress}>
       {children}
     </TouchableOpacity>
   );

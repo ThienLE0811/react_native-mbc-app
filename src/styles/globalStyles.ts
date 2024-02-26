@@ -4,6 +4,7 @@ import {appColors} from '../constansts/appColors';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: appColors.grayBgHome,
   },
 
   text: {

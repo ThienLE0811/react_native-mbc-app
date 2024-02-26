@@ -1,3 +1,9 @@
 import LocalTransferScreen from './LocalTransferScreen';
+import TransactionConfirmationScreen from './TransactionConfirmationScreen';
+import TransferToBankAccountScreen from './TransferToBankAccountScreen';
 
-export {LocalTransferScreen};
+export {
+  LocalTransferScreen,
+  TransactionConfirmationScreen,
+  TransferToBankAccountScreen,
+};

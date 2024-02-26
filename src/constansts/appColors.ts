@@ -4,9 +4,12 @@ export const appColors = {
   title: '#28293D',
   title2: '#333333',
   text: '#120D26',
-  gray: '#8C8C8C ',
+  gray: '#8C8C8C',
   gray2: '#AAAAAA',
   gray3: '#545454',
   error: '#FF4848',
   orange: '#EF4E28',
+  green: '#00ab56',
+  grayBgCard: '#EDEDED',
+  grayBgHome: '#f5f5fa',
 };

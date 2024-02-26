@@ -6,16 +6,12 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {appColors} from './src/constansts/appColors';
 import MainNavigator from './src/navigators/MainNavigator';
-
-const styles = StyleSheet.create({
-  statusBar: {
-    backgroundColor: appColors.primary,
-  },
-});
+import {StoreProvider} from './src/store';
+import {NativeBaseProvider} from 'native-base';
 
 function App(): React.JSX.Element {
   return (
@@ -25,10 +21,13 @@ function App(): React.JSX.Element {
         backgroundColor={appColors.primary}
         translucent
       />
-
-      <NavigationContainer>
-        <MainNavigator />
-      </NavigationContainer>
+      <StoreProvider>
+        <NativeBaseProvider>
+          <NavigationContainer>
+            <MainNavigator />
+          </NavigationContainer>
+        </NativeBaseProvider>
+      </StoreProvider>
     </>
   );
 }

@@ -34,7 +34,7 @@ const ButtonComponent = (props: Props) => {
       onPress={onPress}
       style={[
         globalStyles.button,
-        {backgroundColor: color ?? appColors.primary},
+        {backgroundColor: appColors.primary},
         styles,
       ]}>
       {icon && iconFlex === 'left' && icon}

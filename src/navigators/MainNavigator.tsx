@@ -1,7 +1,10 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {LocalTransferScreen} from '../screens';
-import TransferToBankAccountScreen from '../screens/TransferToBankAccountScreen';
+import {
+  LocalTransferScreen,
+  TransactionConfirmationScreen,
+  TransferToBankAccountScreen,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +15,10 @@ const MainNavigator = () => {
       <Stack.Screen
         name="Transfer To Bank Account"
         component={TransferToBankAccountScreen}
+      />
+      <Stack.Screen
+        name="Transaction Comfirmation"
+        component={TransactionConfirmationScreen}
       />
     </Stack.Navigator>
   );

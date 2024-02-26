@@ -2,10 +2,18 @@ import ButtonComponent from './ButtonComponent';
 import CardComponent from './CardComponent';
 import ContainerComponent from './ContainerComponent';
 import HeaderComponent from './HeaderComponent';
+import InputComponent from './InputComponent';
 import RowComponent from './RowComponent';
 import SectionComponent from './SectionComponent';
 import SpaceComponent from './SpaceComponent';
 import TextComponent from './TextComponent';
+import TotalAmount from './transactionComfirmation/TotalAmount';
+import AccountNameCard from './transferToBankAccount/AccountNameCard';
+import AccountNumberCard from './transferToBankAccount/AccountNumberCard';
+import AmountCard from './transferToBankAccount/AmountCard';
+import CustomNameCard from './transferToBankAccount/CustomNameCard';
+import DescriptionCard from './transferToBankAccount/DescriptionCard';
+import RowSetColor from './transferToBankAccount/RowSetColor';
 
 export {
   RowComponent,
@@ -16,4 +24,12 @@ export {
   SpaceComponent,
   ContainerComponent,
   ButtonComponent,
+  RowSetColor,
+  InputComponent,
+  TotalAmount,
+  CustomNameCard,
+  AccountNumberCard,
+  AccountNameCard,
+  AmountCard,
+  DescriptionCard,
 };

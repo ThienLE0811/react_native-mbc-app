@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {appColors} from '../constansts/appColors';
 import {
   ButtonComponent,
@@ -10,6 +10,7 @@ import {
   SpaceComponent,
   TextComponent,
   TotalAmount,
+  TransactionInformation,
 } from '../components';
 import {observer} from 'mobx-react';
 
@@ -27,6 +28,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textButton: {fontSize: 18, fontWeight: '600'},
+  containerComponent: {
+    flex: 1,
+    paddingTop: 10,
+  },
+  confirmButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: appColors.grayBgHome,
+  },
 });
 
 const TransactionConfirmationScreen = ({navigation}: any) => {
@@ -37,21 +47,25 @@ const TransactionConfirmationScreen = ({navigation}: any) => {
   return (
     <>
       <HeaderComponent title="Transaction confirmation" goBack={goBack} />
-      <SpaceComponent height={10} />
-      <ContainerComponent isScroll>
+
+      <ContainerComponent styles={styles.containerComponent}>
         <SectionComponent>
           <TotalAmount />
           <SpaceComponent height={16} />
-          <ButtonComponent
-            text="Confirm"
-            type="primary"
-            color={appColors.primary}
-            textColor={appColors.white}
-            textStyles={styles.textButton}
-            onPress={() => console.log('123')}
-          />
+          <TransactionInformation />
+          <SpaceComponent height={16} />
         </SectionComponent>
       </ContainerComponent>
+      <View style={styles.confirmButton}>
+        <ButtonComponent
+          text="Confirm"
+          type="primary"
+          color={appColors.primary}
+          textColor={appColors.white}
+          textStyles={styles.textButton}
+          onPress={() => console.log('123')}
+        />
+      </View>
     </>
   );
 };

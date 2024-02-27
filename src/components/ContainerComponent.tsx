@@ -1,5 +1,12 @@
 import React, {ReactNode} from 'react';
-import {ImageBackground, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {globalStyles} from '../styles/globalStyles';
 
 interface Props {
@@ -7,10 +14,11 @@ interface Props {
   isImageBackground?: boolean;
   isScroll?: boolean;
   title?: string;
+  styles?: StyleProp<ViewStyle>;
 }
 
 const ContainerComponent = (props: Props) => {
-  const {children, isImageBackground, isScroll, title} = props;
+  const {children, isImageBackground, isScroll, title, styles} = props;
   const returnContainer = isScroll ? (
     <ScrollView>{children}</ScrollView>
   ) : (
@@ -20,12 +28,12 @@ const ContainerComponent = (props: Props) => {
   return isImageBackground ? (
     <ImageBackground
       source={require('../assets/images/background/bg-mcb-star.png')}
-      style={{flex: 1}}
+      style={[{flex: 1}, styles]}
       imageStyle={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>{returnContainer}</SafeAreaView>
     </ImageBackground>
   ) : (
-    <SafeAreaView style={[globalStyles.container]}>
+    <SafeAreaView style={[globalStyles.container, styles]}>
       <View>{returnContainer}</View>
     </SafeAreaView>
   );

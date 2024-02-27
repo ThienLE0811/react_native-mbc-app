@@ -8,6 +8,9 @@ import SectionComponent from './SectionComponent';
 import SpaceComponent from './SpaceComponent';
 import TextComponent from './TextComponent';
 import TotalAmount from './transactionComfirmation/TotalAmount';
+import TransactionInformation from './transactionComfirmation/TransactionInformation';
+import TransactionInformationCard from './transactionComfirmation/TransactionInformationCard';
+import TransactionInformationDetailCard from './transactionComfirmation/TransactionInformationDetailCard';
 import AccountNameCard from './transferToBankAccount/AccountNameCard';
 import AccountNumberCard from './transferToBankAccount/AccountNumberCard';
 import AmountCard from './transferToBankAccount/AmountCard';
@@ -27,6 +30,9 @@ export {
   RowSetColor,
   InputComponent,
   TotalAmount,
+  TransactionInformation,
+  TransactionInformationCard,
+  TransactionInformationDetailCard,
   CustomNameCard,
   AccountNumberCard,
   AccountNameCard,

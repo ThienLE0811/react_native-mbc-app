@@ -11,7 +11,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {appColors} from './src/constansts/appColors';
 import MainNavigator from './src/navigators/MainNavigator';
 import {StoreProvider} from './src/store';
-import {NativeBaseProvider} from 'native-base';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
   return (
@@ -21,13 +21,14 @@ function App(): React.JSX.Element {
         backgroundColor={appColors.primary}
         translucent
       />
-      <StoreProvider>
-        <NativeBaseProvider>
+
+      <GestureHandlerRootView style={{flex: 1}}>
+        <StoreProvider>
           <NavigationContainer>
             <MainNavigator />
           </NavigationContainer>
-        </NativeBaseProvider>
-      </StoreProvider>
+        </StoreProvider>
+      </GestureHandlerRootView>
     </>
   );
 }

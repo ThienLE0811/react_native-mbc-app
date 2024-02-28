@@ -7,6 +7,7 @@ import RowComponent from './RowComponent';
 import SectionComponent from './SectionComponent';
 import SpaceComponent from './SpaceComponent';
 import TextComponent from './TextComponent';
+import BottomSheetComponent from './bottomSheet/BottomSheetComponent';
 import TotalAmount from './transactionComfirmation/TotalAmount';
 import TransactionInformation from './transactionComfirmation/TransactionInformation';
 import TransactionInformationCard from './transactionComfirmation/TransactionInformationCard';
@@ -33,6 +34,7 @@ export {
   TransactionInformation,
   TransactionInformationCard,
   TransactionInformationDetailCard,
+  BottomSheetComponent,
   CustomNameCard,
   AccountNumberCard,
   AccountNameCard,

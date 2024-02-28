@@ -1,9 +1,8 @@
 import React from 'react';
-import {CardComponent, RowComponent, SectionComponent, TextComponent} from '..';
-import {Image, StyleSheet, View} from 'react-native';
+import {CardComponent, RowComponent, TextComponent} from '..';
+import {StyleSheet} from 'react-native';
 import {appColors} from '../../constansts/appColors';
 import {observer} from 'mobx-react';
-import {Box, Center, CheckIcon, Select} from 'native-base';
 
 const styles = StyleSheet.create({
   sectionComponent: {
@@ -42,21 +41,22 @@ const BeneficiaryBankCard = () => {
   const [service, setService] = React.useState('');
 
   return (
-    <CardComponent styles={styles.cardComponent}>
-      <RowComponent
-        justify="space-between"
-        noStylesGlobal
-        styles={styles.rowComponent}>
-        <TextComponent
-          text="Select beneficiary bank"
-          color={appColors.gray}
-          size={14}
-          weight="400"
-          styles={styles.formDescription}
-        />
-      </RowComponent>
+    <>
+      <CardComponent styles={styles.cardComponent}>
+        <RowComponent
+          justify="space-between"
+          noStylesGlobal
+          styles={styles.rowComponent}>
+          <TextComponent
+            text="Select beneficiary bank"
+            color={appColors.gray}
+            size={14}
+            weight="400"
+            styles={styles.formDescription}
+          />
+        </RowComponent>
 
-      <Select
+        {/* <Select
         selectedValue={service}
         minWidth="200"
         accessibilityLabel="Choose Service"
@@ -84,8 +84,9 @@ const BeneficiaryBankCard = () => {
         <Select.Item label="Cross Platform Development" value="cross" />
         <Select.Item label="UI Designing" value="ui" />
         <Select.Item label="Backend Development" value="backend" />
-      </Select>
-    </CardComponent>
+      </Select> */}
+      </CardComponent>
+    </>
   );
 };
 

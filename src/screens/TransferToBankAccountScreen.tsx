@@ -5,6 +5,7 @@ import {
   AccountNameCard,
   AccountNumberCard,
   AmountCard,
+  BottomSheetComponent,
   ButtonComponent,
   ContainerComponent,
   CustomNameCard,
@@ -16,8 +17,12 @@ import {
 } from '../components';
 import {observer} from 'mobx-react';
 import BeneficiaryBankCard from '../components/transferToBankAccount/BeneficiaryBankCard';
+import {mockApiListAccount} from '../constansts/mockApi';
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 10,
+  },
   sectionComponent: {
     flexDirection: 'column',
     gap: 4,
@@ -45,8 +50,8 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
   return (
     <>
       <HeaderComponent title="Transfer to Bank account" goBack={goBack} />
-      <SpaceComponent height={10} />
-      <ContainerComponent isScroll>
+
+      <ContainerComponent isScroll styles={styles.container}>
         <SectionComponent styles={styles.sectionComponent}>
           <TextComponent text="Form" color={appColors.title} weight="400" />
           <CustomNameCard />
@@ -83,6 +88,8 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
           />
         </SectionComponent>
       </ContainerComponent>
+
+      <BottomSheetComponent data={mockApiListAccount} />
     </>
   );
 };

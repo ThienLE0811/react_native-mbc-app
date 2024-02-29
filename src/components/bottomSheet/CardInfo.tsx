@@ -1,6 +1,6 @@
 import React from 'react';
 import {CardComponent, RowComponent, SpaceComponent, TextComponent} from '..';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {appColors} from '../../constansts/appColors';
 
 interface Props {
@@ -14,44 +14,49 @@ const CardInfo = (props: Props) => {
   const {logo, title, numberBank, bankName} = props;
 
   return (
-    <View>
-      <CardComponent styles={styles.cardComponent}>
-        <RowComponent
-          justify="flex-start"
-          noStylesGlobal
-          styles={[styles.rowComponent, styles.toCard]}>
-          <Image
-            source={require('../../assets/images/others/logo-canadia-bank.png')}
-            style={styles.imageIconLogo}
-          />
-          <View>
-            <TextComponent
-              text={title || ''}
-              size={14}
-              color={appColors.title2}
-              weight="700"
+    <TouchableOpacity
+      onPress={() => {
+        console.log('ssss');
+      }}>
+      <View>
+        <CardComponent styles={styles.cardComponent}>
+          <RowComponent
+            justify="flex-start"
+            noStylesGlobal
+            styles={[styles.rowComponent, styles.toCard]}>
+            <Image
+              source={require('../../assets/images/others/logo-canadia-bank.png')}
+              style={styles.imageIconLogo}
             />
+            <View>
+              <TextComponent
+                text={title || ''}
+                size={14}
+                color={appColors.title2}
+                weight="700"
+              />
 
-            <SpaceComponent height={2} />
-            <TextComponent
-              text={numberBank || ''}
-              color={appColors.gray3}
-              size={12}
-              weight="600"
-              styles={styles.formDescription}
-            />
+              <SpaceComponent height={2} />
+              <TextComponent
+                text={numberBank || ''}
+                color={appColors.gray3}
+                size={12}
+                weight="600"
+                styles={styles.formDescription}
+              />
 
-            <TextComponent
-              text={bankName || ''}
-              color={appColors.gray}
-              size={12}
-              weight="400"
-              styles={styles.formDescription}
-            />
-          </View>
-        </RowComponent>
-      </CardComponent>
-    </View>
+              <TextComponent
+                text={bankName || ''}
+                color={appColors.gray}
+                size={12}
+                weight="400"
+                styles={styles.formDescription}
+              />
+            </View>
+          </RowComponent>
+        </CardComponent>
+      </View>
+    </TouchableOpacity>
   );
 };
 

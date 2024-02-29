@@ -15,6 +15,7 @@ import TransactionInformationDetailCard from './transactionComfirmation/Transact
 import AccountNameCard from './transferToBankAccount/AccountNameCard';
 import AccountNumberCard from './transferToBankAccount/AccountNumberCard';
 import AmountCard from './transferToBankAccount/AmountCard';
+import CurrencyCard from './transferToBankAccount/CurrencyCard';
 import CustomNameCard from './transferToBankAccount/CustomNameCard';
 import DescriptionCard from './transferToBankAccount/DescriptionCard';
 import RowSetColor from './transferToBankAccount/RowSetColor';
@@ -35,6 +36,7 @@ export {
   TransactionInformationCard,
   TransactionInformationDetailCard,
   BottomSheetComponent,
+  CurrencyCard,
   CustomNameCard,
   AccountNumberCard,
   AccountNameCard,

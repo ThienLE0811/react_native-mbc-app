@@ -8,6 +8,7 @@ import {
   BottomSheetComponent,
   ButtonComponent,
   ContainerComponent,
+  CurrencyCard,
   CustomNameCard,
   DescriptionCard,
   HeaderComponent,
@@ -16,8 +17,11 @@ import {
   TextComponent,
 } from '../components';
 import {observer} from 'mobx-react';
-import BeneficiaryBankCard from '../components/transferToBankAccount/BeneficiaryBankCard';
+import BeneficiaryBankCard from '../components/transferToBankAccount/BeneficiaryBankSelect';
 import {mockApiListAccount} from '../constansts/mockApi';
+import {useStore} from '../store';
+import BottomSheetModalComponent from '../components/bottomSheet/BottomSheetModal';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,6 +43,8 @@ const styles = StyleSheet.create({
 });
 
 const TransferToBankAccountScreen = ({navigation}: any) => {
+  const {transferStore} = useStore();
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -47,49 +53,59 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
     navigation.navigate('Transaction Comfirmation');
   };
 
+  const hanldeChangeIndexBottomSheet = (index: number) => {
+    transferStore.setIndexBottomSheet(index);
+  };
+
   return (
     <>
-      <HeaderComponent title="Transfer to Bank account" goBack={goBack} />
+      <BottomSheetModalProvider>
+        <HeaderComponent title="Transfer to Bank account" goBack={goBack} />
 
-      <ContainerComponent isScroll styles={styles.container}>
-        <SectionComponent styles={styles.sectionComponent}>
-          <TextComponent text="Form" color={appColors.title} weight="400" />
-          <CustomNameCard />
-        </SectionComponent>
-        <SectionComponent styles={styles.sectionComponent}>
-          <TextComponent text="To" color={appColors.title} weight="400" />
+        <ContainerComponent isScroll styles={styles.container}>
+          <SectionComponent styles={styles.sectionComponent}>
+            <TextComponent text="Form" color={appColors.title} weight="400" />
+            <CustomNameCard />
+          </SectionComponent>
+          <SectionComponent styles={styles.sectionComponent}>
+            <TextComponent text="To" color={appColors.title} weight="400" />
 
-          <BeneficiaryBankCard />
-          <SpaceComponent height={16} />
+            <BeneficiaryBankCard />
+            <SpaceComponent height={16} />
 
-          <AccountNumberCard />
-          <SpaceComponent height={16} />
+            <AccountNumberCard />
+            <SpaceComponent height={16} />
 
-          <AccountNameCard />
-          <SpaceComponent height={16} />
+            <AccountNameCard />
+            <SpaceComponent height={16} />
 
-          <View style={styles.amountCurrency}>
-            <View style={styles.amount}>
-              <AmountCard />
+            <View style={styles.amountCurrency}>
+              <View style={styles.amount}>
+                <AmountCard />
+              </View>
+              <CurrencyCard />
             </View>
-            <AmountCard />
-          </View>
-          <SpaceComponent height={16} />
-          <DescriptionCard />
+            <SpaceComponent height={16} />
+            <DescriptionCard />
 
-          <SpaceComponent height={16} />
-          <ButtonComponent
-            text="Next"
-            type="primary"
-            color={appColors.primary}
-            textColor={appColors.white}
-            textStyles={styles.textButton}
-            onPress={handleTransactionComfirmation}
-          />
-        </SectionComponent>
-      </ContainerComponent>
+            <SpaceComponent height={16} />
+            <ButtonComponent
+              text="Next"
+              type="primary"
+              color={appColors.primary}
+              textColor={appColors.white}
+              textStyles={styles.textButton}
+              onPress={handleTransactionComfirmation}
+            />
+          </SectionComponent>
+        </ContainerComponent>
 
-      <BottomSheetComponent data={mockApiListAccount} />
+        {/* <BottomSheetComponent
+        indexBottomSheet={transferStore.indexBottomSheet}
+        onCallback={hanldeChangeIndexBottomSheet}
+        data={mockApiListAccount}
+      /> */}
+      </BottomSheetModalProvider>
     </>
   );
 };

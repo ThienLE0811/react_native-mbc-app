@@ -1,4 +1,4 @@
-import {TouchableOpacity, StyleProp, ViewStyle} from 'react-native';
+import {TouchableOpacity, StyleProp, ViewStyle, View} from 'react-native';
 import React, {ReactNode} from 'react';
 
 import {appColors} from '../constansts/appColors';
@@ -13,7 +13,7 @@ interface Props {
 
 const CardComponent = (props: Props) => {
   const {children, bgColor, styles, onPress} = props;
-  return (
+  return onPress ? (
     <TouchableOpacity
       style={[
         globalStyles.card,
@@ -26,6 +26,17 @@ const CardComponent = (props: Props) => {
       onPress={onPress}>
       {children}
     </TouchableOpacity>
+  ) : (
+    <View
+      style={[
+        globalStyles.card,
+        {
+          backgroundColor: bgColor ?? appColors.white,
+        },
+        styles,
+      ]}>
+      {children}
+    </View>
   );
 };
 

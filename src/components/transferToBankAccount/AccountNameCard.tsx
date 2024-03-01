@@ -4,6 +4,10 @@ import {StyleSheet, View} from 'react-native';
 import {appColors} from '../../constansts/appColors';
 import {observer} from 'mobx-react';
 
+interface Props {
+  title: string;
+}
+
 const styles = StyleSheet.create({
   sectionComponent: {
     flexDirection: 'column',
@@ -37,7 +41,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const AccountNameCard = () => {
+const AccountNameCard = (props: Props) => {
+  const {title} = props;
   return (
     <CardComponent styles={styles.cardComponent} bgColor={appColors.grayBgCard}>
       <RowComponent
@@ -48,7 +53,7 @@ const AccountNameCard = () => {
           <TextComponent text="Account name" size={14} color={appColors.gray} />
 
           <TextComponent
-            text="CUSTOMER NAME"
+            text={title || ''}
             color={appColors.title2}
             size={16}
             weight="400"

@@ -1,24 +1,30 @@
-import React, {MutableRefObject, useCallback, useRef} from 'react';
+import React, {MutableRefObject, useCallback, useMemo, useRef} from 'react';
 import {
   ButtonComponent,
   CardComponent,
+  InputComponent,
   RowComponent,
-  SpaceComponent,
   TextComponent,
 } from '..';
 import {
-  Image,
+  FlatList,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {appColors} from '../../constansts/appColors';
 import {observer} from 'mobx-react';
-import {mockApiListAccount} from '../../constansts/mockApi';
-import {BottomSheetModal, BottomSheetSectionList} from '@gorhom/bottom-sheet';
+import {ArchiveBook, CloseCircle, SearchNormal1} from 'iconsax-react-native';
+import {
+  BottomSheetFlatList,
+  BottomSheetModal,
+  BottomSheetSectionList,
+} from '@gorhom/bottom-sheet';
 import CardInfo from '../bottomSheet/CardInfo';
-import {CloseCircle, SearchNormal1} from 'iconsax-react-native';
+import {mockApiListAccountNumber} from '../../constansts/mockApi';
+import {Control} from 'react-hook-form';
 
 const styles = StyleSheet.create({
   sectionComponent: {
@@ -27,15 +33,14 @@ const styles = StyleSheet.create({
   },
   rowComponent: {
     flexDirection: 'row',
-    flex: 1,
   },
   cardComponent: {
     padding: 12,
   },
 
-  imageIconArrowDown: {
-    height: 22,
-    width: 22,
+  imageRightCard: {
+    height: 16,
+    width: 16,
   },
   formDescription: {marginTop: 4},
 
@@ -51,89 +56,83 @@ const styles = StyleSheet.create({
   changeRight: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-
-  imageIconLogo: {
-    height: 20,
-    width: 20,
-  },
-
-  rowInfoComponent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-
-  textInfo: {
-    flex: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    // paddingHorizontal: 16,
-  },
-  sectionHeaderContainer: {
-    backgroundColor: 'white',
-    padding: 2,
+    gap: 12,
   },
   textButtonStyles: {
     color: appColors.orange,
     fontSize: 18,
     fontWeight: '600',
   },
-  textInput: {
-    flex: 1,
+  sectionHeaderContainer: {
+    backgroundColor: 'white',
+    padding: 2,
   },
   rowComponentSearch: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  textInput: {
+    flex: 1,
+  },
+  contentContainer: {
+    flex: 1,
+    // paddingHorizontal: 16,
+  },
 });
 
-type ListAccount = {
-  id: string;
-  title: string;
-  data: Array<{
-    id: string;
-    title: string;
-    numberBank: string;
-    bankName: string;
-  }>;
-};
-
 interface Props {
-  banks: Array<ListAccount>;
+  banks: Array<AccountNumber>;
   open: boolean;
   onDismiss: () => void;
   onSelect: (item: AccountInfoBeneficiary) => void;
   bottomRef: MutableRefObject<BottomSheetModal>;
 }
 
+const renderItem = ({
+  item,
+  onSelect,
+}: {
+  item: AccountInfoBeneficiary;
+  onSelect: (item: any) => void;
+}) => {
+  return (
+    <TouchableOpacity onPress={() => onSelect(item)} activeOpacity={0.8}>
+      <CardInfo
+        title={item.title}
+        bankName={item.bankName}
+        numberBank={item?.numberBank?.toString()}
+      />
+    </TouchableOpacity>
+  );
+};
+
 const BottomSheetBeneficiary = (props: Props) => {
   // ref
   // const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const {banks, onDismiss, bottomRef, onSelect} = props;
 
-  const renderSectionHeader = useCallback(
-    ({section}: any) => (
-      <View style={styles.sectionHeaderContainer}>
-        <TextComponent text={section.title} size={16} weight="700" />
-      </View>
-    ),
-    [],
-  );
+  // const renderSectionHeader = useCallback(
+  //   ({section}: any) => (
+  //     <View style={styles.sectionHeaderContainer}>
+  //       <TextComponent text={section.title} size={16} weight="700" />
+  //     </View>
+  //   ),
+  //   [],
+  // );
 
-  const renderItem = ({item}: {item: AccountInfoBeneficiary}) => {
-    return (
-      <TouchableOpacity onPress={() => onSelect(item)} activeOpacity={0.8}>
-        <CardInfo
-          title={item.title}
-          bankName={item.bankName}
-          numberBank={item?.numberBank?.toString()}
-        />
-      </TouchableOpacity>
-    );
-  };
+  // const renderItem = ({item}: {item: any}) => {
+  //   console.log('item:: ', item);
+
+  //   return (
+  //     <TouchableOpacity onPress={() => onSelect(item)} activeOpacity={0.8}>
+  //       <View>
+  //         <TextComponent text={item} />
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // };
+
   return (
     <View>
       <BottomSheetModal
@@ -146,7 +145,9 @@ const BottomSheetBeneficiary = (props: Props) => {
         )}
         snapPoints={['90%']}
         enableHandlePanningGesture={false}
-        enableOverDrag={false}>
+        enableOverDrag={false}
+        // onChange={() => console.log('123')}
+      >
         <>
           <RowComponent justify="space-between">
             <TextComponent text="List" size={20} weight="600" />
@@ -169,75 +170,91 @@ const BottomSheetBeneficiary = (props: Props) => {
             />
           </View>
 
-          <BottomSheetSectionList
-            sections={banks}
-            keyExtractor={i => i.id}
+          <FlatList
+            data={banks}
+            renderItem={({item}) => renderItem({item, onSelect})}
+            keyExtractor={item => item.id}
+          />
+
+          {/* <BottomSheetFlatList
+            sections={data}
+            keyExtractor={i => i}
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
             style={styles.contentContainer}
-          />
+          /> */}
         </>
       </BottomSheetModal>
     </View>
   );
 };
 
-const BeneficiaryBankSelect = ({
+const AccountBeneficiaryNumberSelect = ({
   onSelect,
-  accountInfoBeneficiary,
+  control,
+  name,
+  defaultValue,
 }: {
   onSelect: (item: AccountInfoBeneficiary) => void;
-  accountInfoBeneficiary: AccountInfoBeneficiary;
+  control: Control<{}, any, {}>;
+  name: string;
+  defaultValue?: number;
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   return (
     <>
-      <CardComponent
-        styles={styles.cardComponent}
-        onPress={() => {
-          // setOpenModal(true);
-          bottomSheetModalRef.current?.present();
-        }}>
+      <CardComponent styles={styles.cardComponent}>
         <RowComponent
           justify="space-between"
           noStylesGlobal
           styles={styles.rowComponent}>
-          <View style={{flex: 1}}>
+          <View>
             <TextComponent
-              text="Select beneficiary bank"
-              size={12}
+              text="Account number"
+              size={14}
               weight="600"
               color={appColors.gray}
             />
-            <SpaceComponent height={8} />
 
-            <RowComponent styles={styles.rowInfoComponent}>
-              <Image
-                source={require('../../assets/images/others/logo-canadia-bank.png')}
-                style={styles.imageIconLogo}
-              />
+            <InputComponent
+              placeHolder="Enter Account Number"
+              allowClear
+              name={name}
+              control={control}
+              maxLength={12}
+              type="numeric"
+              defaultValue={defaultValue?.toString()}
+            />
 
-              <TextComponent
-                text={accountInfoBeneficiary?.bankName}
-                color={appColors.title2}
-                size={18}
-                weight="600"
-                styles={styles.textInfo}
-              />
-            </RowComponent>
+            {/* <TextComponent
+              text="0789454545"
+              color={appColors.title2}
+              size={16}
+              weight="400"
+              styles={styles.formTotal}
+            /> */}
           </View>
 
           <View style={styles.changeRight}>
-            <Image
-              source={require('../../assets/images/icons/icon-arrow-down.png')}
-              style={styles.imageIconArrowDown}
+            <TextComponent
+              text="USD"
+              color={appColors.green}
+              size={16}
+              weight="600"
             />
+            <TouchableOpacity
+              onPress={() => {
+                // setOpenModal(true);
+                bottomSheetModalRef.current?.present();
+              }}>
+              <ArchiveBook size="24" color="#FF8A65" />
+            </TouchableOpacity>
           </View>
         </RowComponent>
       </CardComponent>
       <BottomSheetBeneficiary
-        banks={mockApiListAccount}
+        banks={mockApiListAccountNumber}
         onSelect={(item: AccountInfoBeneficiary) => {
           onSelect(item);
           bottomSheetModalRef.current?.close();
@@ -250,4 +267,4 @@ const BeneficiaryBankSelect = ({
   );
 };
 
-export default observer(BeneficiaryBankSelect);
+export default observer(AccountBeneficiaryNumberSelect);

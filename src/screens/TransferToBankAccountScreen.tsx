@@ -2,10 +2,9 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {appColors} from '../constansts/appColors';
 import {
+  AccountBeneficiaryNumberSelect,
   AccountNameCard,
-  AccountNumberCard,
   AmountCard,
-  BottomSheetComponent,
   ButtonComponent,
   ContainerComponent,
   CurrencyCard,
@@ -17,11 +16,12 @@ import {
   TextComponent,
 } from '../components';
 import {observer} from 'mobx-react';
-import BeneficiaryBankCard from '../components/transferToBankAccount/BeneficiaryBankSelect';
-import {mockApiListAccount} from '../constansts/mockApi';
 import {useStore} from '../store';
-import BottomSheetModalComponent from '../components/bottomSheet/BottomSheetModal';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import BeneficiaryBankSelect from '../components/transferToBankAccount/BeneficiaryBankSelect';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,8 +42,29 @@ const styles = StyleSheet.create({
   textButton: {fontSize: 18, fontWeight: '600'},
 });
 
+const schema = yup.object().shape({
+  accountNumber: yup.number().min(12).max(12).required(),
+  amount: yup.number().min(4).max(1).required(),
+});
+
 const TransferToBankAccountScreen = ({navigation}: any) => {
   const {transferStore} = useStore();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+    reset,
+    register,
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+    defaultValues: {
+      accountNumber:
+        transferStore.accountInfoBeneficiary?.numberBank || undefined,
+    },
+  });
+
+  console.log('log:: ', transferStore.accountInfoBeneficiary);
 
   const goBack = () => {
     navigation.goBack();
@@ -53,8 +74,12 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
     navigation.navigate('Transaction Comfirmation');
   };
 
-  const hanldeChangeIndexBottomSheet = (index: number) => {
-    transferStore.setIndexBottomSheet(index);
+  const handleChangeAccountInfoBeneficiary = (info: AccountInfoBeneficiary) => {
+    transferStore.setAccountInfoBeneficiary(info);
+  };
+
+  const handleChangeBankInfoBeneficiary = (info: AccountInfoBeneficiary) => {
+    transferStore.setBankInfoBeneficiary(info);
   };
 
   return (
@@ -70,18 +95,32 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
           <SectionComponent styles={styles.sectionComponent}>
             <TextComponent text="To" color={appColors.title} weight="400" />
 
-            <BeneficiaryBankCard />
+            <BeneficiaryBankSelect
+              onSelect={handleChangeBankInfoBeneficiary}
+              accountInfoBeneficiary={transferStore.bankInfoBeneficiary}
+            />
             <SpaceComponent height={16} />
 
-            <AccountNumberCard />
+            <AccountBeneficiaryNumberSelect
+              control={control}
+              name={'accountNumber'}
+              onSelect={handleChangeAccountInfoBeneficiary}
+              defaultValue={transferStore.accountInfoBeneficiary?.numberBank}
+            />
             <SpaceComponent height={16} />
 
-            <AccountNameCard />
+            <AccountNameCard
+              title={transferStore.accountInfoBeneficiary?.title}
+            />
             <SpaceComponent height={16} />
 
             <View style={styles.amountCurrency}>
               <View style={styles.amount}>
-                <AmountCard />
+                <AmountCard
+                  control={control}
+                  name={'amount'}
+                  register={register}
+                />
               </View>
               <CurrencyCard />
             </View>

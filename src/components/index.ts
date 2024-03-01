@@ -13,7 +13,7 @@ import TransactionInformation from './transactionComfirmation/TransactionInforma
 import TransactionInformationCard from './transactionComfirmation/TransactionInformationCard';
 import TransactionInformationDetailCard from './transactionComfirmation/TransactionInformationDetailCard';
 import AccountNameCard from './transferToBankAccount/AccountNameCard';
-import AccountNumberCard from './transferToBankAccount/AccountNumberCard';
+import AccountBeneficiaryNumberSelect from './transferToBankAccount/AccountBeneficiaryNumberSelect';
 import AmountCard from './transferToBankAccount/AmountCard';
 import CurrencyCard from './transferToBankAccount/CurrencyCard';
 import CustomNameCard from './transferToBankAccount/CustomNameCard';
@@ -38,7 +38,7 @@ export {
   BottomSheetComponent,
   CurrencyCard,
   CustomNameCard,
-  AccountNumberCard,
+  AccountBeneficiaryNumberSelect,
   AccountNameCard,
   AmountCard,
   DescriptionCard,

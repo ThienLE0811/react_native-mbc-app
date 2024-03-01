@@ -210,8 +210,7 @@ const BottomSheetComponent = (props: Props) => {
         // enableDynamicSizing={true}
         snapPoints={['90%']}
         enableHandlePanningGesture={false}
-        enableOverDrag={false}
-        onChange={() => console.log('123')}>
+        enableOverDrag={false}>
         <BottomSheetSectionList
           sections={data}
           keyExtractor={i => i.id}

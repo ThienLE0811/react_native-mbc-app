@@ -1,9 +1,11 @@
 import React, {ReactNode, useState} from 'react';
 import {
   KeyboardType,
+  NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
   TextInput,
+  TextInputFocusEventData,
   View,
   ViewStyle,
 } from 'react-native';
@@ -20,12 +22,14 @@ interface Props {
   allowClear?: boolean;
   type?: KeyboardType;
   defaultValue?: string;
-  control: Control<any>;
+  control?: Control<any>;
+  maxLength?: number;
   rules?: Omit<
     RegisterOptions<any>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
   name: string;
+  onBlurI?: ({nativeEvent: {eventCount, target, text}}) => void;
 }
 
 const styles = StyleSheet.create({
@@ -66,6 +70,8 @@ const InputComponent = (props: Props) => {
     rules,
     name,
     styleInput,
+    maxLength,
+    onBlurI,
   } = props;
   const [isShowPassword, setIsShowPassword] = useState<boolean>(
     isPassword ?? false, // neu undefind la false
@@ -78,19 +84,22 @@ const InputComponent = (props: Props) => {
         control={control}
         rules={rules}
         name={name}
-        render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={[styles.input, globalStyles.text]}
-            value={value}
-            defaultValue={defaultValue}
-            placeholder={placeHolder ?? ''}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            secureTextEntry={isShowPassword}
-            placeholderTextColor={'#747688'}
-            keyboardType={type ?? 'default'}
-          />
-        )}
+        render={({field: {onChange, onBlur, value}}) => {
+          return (
+            <TextInput
+              style={[styles.input, globalStyles.text, styleInput]}
+              value={value}
+              defaultValue={defaultValue}
+              placeholder={placeHolder ?? ''}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              secureTextEntry={isShowPassword}
+              placeholderTextColor={'#747688'}
+              keyboardType={type ?? 'default'}
+              maxLength={maxLength}
+            />
+          );
+        }}
       />
       {suffix ?? suffix}
       {/* <TouchableOpacity

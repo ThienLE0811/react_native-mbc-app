@@ -66,7 +66,7 @@ const DescriptionCard = () => {
           styles={styles.formTotal}
         /> */}
         <InputComponent
-          placeHolder="Nhập tiêu đề bài viết"
+          placeHolder="Enter Description"
           allowClear
           name="titleVi"
           control={control}

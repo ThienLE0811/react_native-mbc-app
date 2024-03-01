@@ -1,9 +1,10 @@
 import React from 'react';
-import {CardComponent, RowComponent, TextComponent} from '..';
+import {CardComponent, InputComponent, RowComponent, TextComponent} from '..';
 import {StyleSheet, View} from 'react-native';
 import {appColors} from '../../constansts/appColors';
 import {observer} from 'mobx-react';
 import {ArchiveBook} from 'iconsax-react-native';
+import {Control, UseFormRegister} from 'react-hook-form';
 
 const styles = StyleSheet.create({
   sectionComponent: {
@@ -35,9 +36,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
+  styleInput: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: appColors.title2,
+  },
 });
 
-const AmountCard = () => {
+const AmountCard = ({
+  onSelect,
+  control,
+  name,
+  register,
+}: {
+  onSelect: (item: AccountInfoBeneficiary) => void;
+  control: Control<{}, any, {}>;
+  name: string;
+  defaultValue?: number;
+  register: UseFormRegister<any>;
+}) => {
+  register(name, {
+    onBlur: e => console.log('hê nhô:: ', e),
+  });
+
   return (
     <CardComponent styles={styles.cardComponent}>
       <RowComponent justify="space-between" noStylesGlobal>
@@ -48,12 +69,14 @@ const AmountCard = () => {
           color={appColors.gray}
         />
 
-        <TextComponent
-          text="180,000,000"
-          color={appColors.title2}
-          size={16}
-          weight="400"
-          styles={styles.formTotal}
+        <InputComponent
+          placeHolder="Enter Amount Number"
+          allowClear
+          name={name}
+          control={control}
+          maxLength={10}
+          type="numeric"
+          styleInput={styles.styleInput}
         />
       </RowComponent>
     </CardComponent>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {appColors} from '../constansts/appColors';
 import {
@@ -8,12 +8,13 @@ import {
   ButtonComponent,
   ContainerComponent,
   CurrencyCard,
-  CustomNameCard,
+  CustomerNameSelect,
   DescriptionCard,
   HeaderComponent,
   SectionComponent,
   SpaceComponent,
   TextComponent,
+  TextError,
 } from '../components';
 import {observer} from 'mobx-react';
 import {useStore} from '../store';
@@ -22,6 +23,8 @@ import BeneficiaryBankSelect from '../components/transferToBankAccount/Beneficia
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import {accountInfoMoneyTransfer} from '../constansts/mockApi';
+import {isEmptyObject} from '../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,8 +46,11 @@ const styles = StyleSheet.create({
 });
 
 const schema = yup.object().shape({
-  accountNumber: yup.number().min(12).max(12).required(),
-  amount: yup.number().min(4).max(1).required(),
+  accountNumber: yup
+    .string()
+    .matches(/^\d{12}$/, 'Account number must be at least 12 digits'),
+  amount: yup.number().min(4).max(200000000).required(),
+  description: yup.string().max(64),
 });
 
 const TransferToBankAccountScreen = ({navigation}: any) => {
@@ -63,14 +69,28 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
         transferStore.accountInfoBeneficiary?.numberBank || undefined,
     },
   });
-
-  console.log('log:: ', transferStore.accountInfoBeneficiary);
+  const [isChangeNumber, setIsChangeNumber] = useState<boolean>(false);
+  const checkErrors = isEmptyObject(errors);
+  useEffect(() => {
+    transferStore.setAccountInfoMoneyTransfer(accountInfoMoneyTransfer[0]);
+  }, []);
 
   const goBack = () => {
     navigation.goBack();
   };
 
+  console.log(
+    'check:: ',
+    Boolean(transferStore.bankInfoBeneficiary.description),
+  );
+
   const handleTransactionComfirmation = () => {
+    Boolean(transferStore.bankInfoBeneficiary.description) === false &&
+      transferStore.setAccountInfoBeneficiary({
+        ...transferStore.accountInfoBeneficiary,
+        description: `${transferStore.accountInfoMoneyTransfer?.userName} transfers`,
+      });
+
     navigation.navigate('Transaction Comfirmation');
   };
 
@@ -82,6 +102,23 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
     transferStore.setBankInfoBeneficiary(info);
   };
 
+  const hanldeBlurAccountNumberBeneficiary = (number: number) => {
+    transferStore.setAccountNumberBeneficiary(number.toString());
+  };
+
+  const handleChangeAccountNumberBeneficiary = (number: number) => {
+    transferStore.setAccountNumberBeneficiary(number.toString());
+    register('accountNumber', {
+      value: transferStore.accountNumberBeneficiary,
+    });
+  };
+
+  const handleChangeAccountInfoMoneyTransfer = (
+    info: AccountInfoMoneyTransfer,
+  ) => {
+    transferStore.setAccountInfoMoneyTransfer(info);
+  };
+
   return (
     <>
       <BottomSheetModalProvider>
@@ -90,7 +127,10 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
         <ContainerComponent isScroll styles={styles.container}>
           <SectionComponent styles={styles.sectionComponent}>
             <TextComponent text="Form" color={appColors.title} weight="400" />
-            <CustomNameCard />
+            <CustomerNameSelect
+              onSelect={handleChangeAccountInfoMoneyTransfer}
+              customnerNameInfo={transferStore.accountInfoMoneyTransfer}
+            />
           </SectionComponent>
           <SectionComponent styles={styles.sectionComponent}>
             <TextComponent text="To" color={appColors.title} weight="400" />
@@ -106,6 +146,9 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
               name={'accountNumber'}
               onSelect={handleChangeAccountInfoBeneficiary}
               defaultValue={transferStore.accountInfoBeneficiary?.numberBank}
+              register={register}
+              onBlur={hanldeBlurAccountNumberBeneficiary}
+              onChange={handleChangeAccountNumberBeneficiary}
             />
             <SpaceComponent height={16} />
 
@@ -125,7 +168,12 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
               <CurrencyCard />
             </View>
             <SpaceComponent height={16} />
-            <DescriptionCard />
+            <DescriptionCard
+              control={control}
+              name="description"
+              register={register}
+              defaultValue={`${transferStore.accountInfoMoneyTransfer?.userName} transfers`}
+            />
 
             <SpaceComponent height={16} />
             <ButtonComponent
@@ -134,10 +182,21 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
               color={appColors.primary}
               textColor={appColors.white}
               textStyles={styles.textButton}
-              onPress={handleTransactionComfirmation}
+              onPress={handleSubmit(handleTransactionComfirmation)}
+              disabled={!checkErrors}
             />
           </SectionComponent>
         </ContainerComponent>
+
+        {errors.accountNumber && (
+          <TextError children={errors.accountNumber?.message} />
+        )}
+
+        {errors.description && (
+          <TextError children={errors.description?.message} />
+        )}
+
+        {errors.amount && <TextError children={errors.amount?.message} />}
 
         {/* <BottomSheetComponent
         indexBottomSheet={transferStore.indexBottomSheet}

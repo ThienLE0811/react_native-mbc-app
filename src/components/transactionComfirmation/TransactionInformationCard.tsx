@@ -48,7 +48,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionInformationCard = () => {
+const TransactionInformationCard = ({
+  accountTranferInfo,
+}: {
+  accountTranferInfo: any;
+}) => {
   return (
     <View>
       <CardComponent styles={styles.cardComponent}>

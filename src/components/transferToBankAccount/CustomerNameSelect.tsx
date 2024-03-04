@@ -1,36 +1,19 @@
-import React, {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import {
-  ButtonComponent,
-  CardComponent,
-  InputComponent,
-  RowComponent,
-  TextComponent,
-} from '..';
+import React, {MutableRefObject, useRef} from 'react';
+import {ButtonComponent, CardComponent, RowComponent, TextComponent} from '..';
 import {
   FlatList,
+  Image,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {appColors} from '../../constansts/appColors';
 import {observer} from 'mobx-react';
-import {ArchiveBook, CloseCircle, SearchNormal1} from 'iconsax-react-native';
-import {
-  BottomSheetFlatList,
-  BottomSheetModal,
-  BottomSheetSectionList,
-} from '@gorhom/bottom-sheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {CloseCircle, SearchNormal1} from 'iconsax-react-native';
 import CardInfo from '../bottomSheet/CardInfo';
-import {mockApiListAccountNumber} from '../../constansts/mockApi';
+import {accountInfoMoneyTransfer} from '../../constansts/mockApi';
 import {Control, UseFormRegister} from 'react-hook-form';
 
 const styles = StyleSheet.create({
@@ -63,36 +46,27 @@ const styles = StyleSheet.create({
   changeRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+  },
+  textInput: {
+    flex: 1,
   },
   textButtonStyles: {
     color: appColors.orange,
     fontSize: 18,
     fontWeight: '600',
   },
-  sectionHeaderContainer: {
-    backgroundColor: 'white',
-    padding: 2,
-  },
   rowComponentSearch: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  textInput: {
-    flex: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    // paddingHorizontal: 16,
-  },
 });
 
 interface Props {
-  banks: Array<AccountNumber>;
+  banks: Array<AccountInfoMoneyTransfer>;
   open: boolean;
   onDismiss: () => void;
-  onSelect: (item: AccountInfoBeneficiary) => void;
+  onSelect: (item: AccountInfoMoneyTransfer) => void;
   bottomRef: MutableRefObject<BottomSheetModal>;
 }
 
@@ -100,14 +74,14 @@ const renderItem = ({
   item,
   onSelect,
 }: {
-  item: AccountInfoBeneficiary;
+  item: AccountInfoMoneyTransfer;
   onSelect: (item: any) => void;
 }) => {
   return (
     <TouchableOpacity onPress={() => onSelect(item)} activeOpacity={0.8}>
       <CardInfo
-        title={item.title}
-        bankName={item.bankName}
+        title={item.userName}
+        bankName={`${item.amount} ${item.typeMoney}`}
         numberBank={item?.numberBank?.toString()}
       />
     </TouchableOpacity>
@@ -174,89 +148,66 @@ const BottomSheetBeneficiary = (props: Props) => {
   );
 };
 
-const AccountBeneficiaryNumberSelect = ({
+const CustomerNameSelect = ({
   onSelect,
-  onBlur,
-  control,
-  name,
-  defaultValue,
-  value,
-  register,
-  onChange,
+  customnerNameInfo,
 }: {
-  onSelect: (item: AccountInfoBeneficiary) => void;
-  onBlur: (number: number) => void;
-  onChange: (number: number) => void;
-  control: Control<{}, any, {}>;
-  name: string;
-  defaultValue?: string;
-  value: string;
-  register: UseFormRegister<any>;
+  onSelect: (item: AccountInfoMoneyTransfer) => void;
+  customnerNameInfo: AccountInfoMoneyTransfer;
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  register(name, {
-    onBlur: e => {
-      onBlur(e.target.value);
-    },
-    onChange: e => {
-      onChange(e.target.value);
-    },
-  });
-
   return (
     <>
-      <CardComponent styles={styles.cardComponent}>
+      <CardComponent
+        styles={styles.cardComponent}
+        onPress={() => {
+          // setOpenModal(true);
+          bottomSheetModalRef.current?.present();
+        }}>
         <RowComponent
           justify="space-between"
           noStylesGlobal
           styles={styles.rowComponent}>
           <View>
             <TextComponent
-              text="Account number"
+              text={customnerNameInfo?.userName}
               size={14}
-              weight="600"
-              color={appColors.gray}
-            />
-
-            <InputComponent
-              placeHolder="Enter Account Number"
-              allowClear
-              name={name}
-              control={control}
-              maxLength={12}
-              type="numeric"
-              defaultValue={defaultValue}
-            />
-
-            {/* <TextComponent
-              text="0789454545"
               color={appColors.title2}
-              size={16}
-              weight="400"
-              styles={styles.formTotal}
-            /> */}
-          </View>
-
-          <View style={styles.changeRight}>
-            <TextComponent
-              text="USD"
-              color={appColors.green}
-              size={16}
-              weight="600"
             />
-            <TouchableOpacity
-              onPress={() => {
-                // setOpenModal(true);
-                bottomSheetModalRef.current?.present();
-              }}>
-              <ArchiveBook size="24" color="#FF8A65" />
-            </TouchableOpacity>
+            <TextComponent
+              text={customnerNameInfo?.numberBank}
+              color={appColors.gray}
+              size={14}
+              weight="400"
+              styles={styles.formDescription}
+            />
+            <TextComponent
+              text={`${customnerNameInfo?.amount} ${customnerNameInfo?.typeMoney}`}
+              color={appColors.orange}
+              size={20}
+              weight="600"
+              styles={styles.formTotal}
+            />
+          </View>
+          <View style={styles.viewChangeRight}>
+            <View style={styles.changeRight}>
+              <TextComponent
+                text="CHANGE"
+                color={appColors.primary}
+                size={12}
+                weight="400"
+              />
+              <Image
+                source={require('../../assets/images/icons/icon-right-arr-blue.png')}
+                style={styles.imageRightCard}
+              />
+            </View>
           </View>
         </RowComponent>
       </CardComponent>
       <BottomSheetBeneficiary
-        banks={mockApiListAccountNumber}
+        banks={accountInfoMoneyTransfer}
         onSelect={(item: AccountInfoBeneficiary) => {
           onSelect(item);
           bottomSheetModalRef.current?.close();
@@ -269,4 +220,4 @@ const AccountBeneficiaryNumberSelect = ({
   );
 };
 
-export default observer(AccountBeneficiaryNumberSelect);
+export default observer(CustomerNameSelect);

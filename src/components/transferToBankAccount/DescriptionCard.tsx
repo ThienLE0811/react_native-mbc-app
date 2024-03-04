@@ -3,9 +3,10 @@ import {CardComponent, InputComponent, RowComponent, TextComponent} from '..';
 import {StyleSheet} from 'react-native';
 import {appColors} from '../../constansts/appColors';
 import {observer} from 'mobx-react';
-import {useForm} from 'react-hook-form';
+import {Control, UseFormRegister, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import {useStore} from '../../store';
 const styles = StyleSheet.create({
   sectionComponent: {
     flexDirection: 'column',
@@ -38,15 +39,30 @@ const styles = StyleSheet.create({
   },
 });
 
-const schema = yup.object().shape({});
+const DescriptionCard = ({
+  onBlur,
+  control,
+  name,
+  defaultValue,
+  register,
+}: {
+  onSelect: (item: AccountInfoBeneficiary) => void;
+  onBlur: (number: number) => void;
+  control: Control<{}, any, {}>;
+  name: string;
+  defaultValue?: string;
+  register: UseFormRegister<any>;
+}) => {
+  const {transferStore} = useStore();
 
-const DescriptionCard = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-    reset,
-  } = useForm({resolver: yupResolver(schema)});
+  register(name, {
+    onBlur: e => console.log('hey'),
+    onChange: e =>
+      transferStore.setAccountInfoBeneficiary({
+        ...transferStore.accountInfoBeneficiary,
+        description: e.target.value,
+      }),
+  });
 
   return (
     <CardComponent styles={styles.cardComponent}>
@@ -68,8 +84,10 @@ const DescriptionCard = () => {
         <InputComponent
           placeHolder="Enter Description"
           allowClear
-          name="titleVi"
+          name={name}
           control={control}
+          defaultValue={defaultValue}
+          type="default"
         />
       </RowComponent>
     </CardComponent>

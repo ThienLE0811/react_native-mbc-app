@@ -1,8 +1,9 @@
 interface AccountInfoBeneficiary {
   id: string;
   title: string;
-  numberBank?: number;
+  numberBank?: string;
   bankName: string;
+  description?: string
 }
 
 interface AccountNumber {
@@ -10,4 +11,12 @@ interface AccountNumber {
   id: string;
   numberBank?: string;
   bankName: string;
+}
+
+interface AccountInfoMoneyTransfer {
+  id: string;
+  userName: string;
+  numberBank: string;
+  amount: string;
+  typeMoney: string;
 }

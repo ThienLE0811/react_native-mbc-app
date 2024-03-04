@@ -5,7 +5,14 @@ import {
   TransactionInformationDetailCard,
 } from '..';
 
-const TransactionInformation = () => {
+interface Props {
+  accountTranferFromInfo: any;
+  accountTranferToInfo: any;
+}
+
+const TransactionInformation = (props: Props) => {
+  const {accountTranferInfo} = props;
+
   return (
     <>
       <TransactionInformationCard />

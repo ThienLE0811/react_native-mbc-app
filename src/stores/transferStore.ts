@@ -9,12 +9,21 @@ export class TransferStore {
     id: '',
     numberBank: undefined,
     bankName: '',
+    description: '',
   };
   accountInfoBeneficiary: AccountInfoBeneficiary = {
     title: '',
     id: '',
     numberBank: undefined,
     bankName: '',
+  };
+  accountNumberBeneficiary: string | undefined = undefined;
+  accountInfoMoneyTransfer: AccountInfoMoneyTransfer = {
+    typeMoney: '',
+    id: '',
+    amount: '',
+    numberBank: '',
+    userName: '',
   };
 
   constructor() {
@@ -23,10 +32,14 @@ export class TransferStore {
       indexBottomSheet: observable,
       bankInfoBeneficiary: observable,
       accountInfoBeneficiary: observable,
+      accountNumberBeneficiary: observable,
+      accountInfoMoneyTransfer: observable,
       setBgColorCard: action,
       setIndexBottomSheet: action,
       setBankInfoBeneficiary: action,
       setAccountInfoBeneficiary: action,
+      setAccountNumberBeneficiary: action,
+      setAccountInfoMoneyTransfer: action,
     });
   }
 
@@ -44,6 +57,13 @@ export class TransferStore {
 
   setAccountInfoBeneficiary = (info: AccountInfoBeneficiary) => {
     this.accountInfoBeneficiary = info;
+  };
+  setAccountNumberBeneficiary = (number: string) => {
+    this.accountNumberBeneficiary = number;
+  };
+
+  setAccountInfoMoneyTransfer = (info: AccountInfoMoneyTransfer) => {
+    this.accountInfoMoneyTransfer = info;
   };
 }
 

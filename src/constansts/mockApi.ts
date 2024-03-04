@@ -9,6 +9,23 @@ type ListAccount = {
   }>;
 };
 
+export const accountInfoMoneyTransfer: Array<AccountInfoMoneyTransfer> = [
+  {
+    id: '1',
+    userName: 'LE VAN THIEN',
+    numberBank: '809999939',
+    amount: '200000000',
+    typeMoney: 'KHR',
+  },
+  {
+    id: '2',
+    userName: 'NGUYEN HA THANH',
+    numberBank: '809999939',
+    amount: '300000000',
+    typeMoney: 'KHR',
+  },
+];
+
 export const mockApiListAccount: Array<ListAccount> = [
   {
     id: '1',
@@ -76,13 +93,13 @@ export const mockApiListAccountNumber: Array<AccountNumber> = [
   {
     id: '1',
     title: 'CUSTOMER NAME 1',
-    numberBank: '03701056333',
+    numberBank: '037010563333',
     bankName: 'Canadia Bank 6',
   },
   {
     id: '2',
     title: 'CUSTOMER NAME 2',
-    numberBank: '03701056345',
+    numberBank: '037010563452',
     bankName: 'Canadia Bank 6',
   },
 ];

@@ -1,11 +1,9 @@
 import React, {ReactNode, useState} from 'react';
 import {
   KeyboardType,
-  NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
   TextInput,
-  TextInputFocusEventData,
   View,
   ViewStyle,
 } from 'react-native';
@@ -29,7 +27,6 @@ interface Props {
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
   name: string;
-  onBlurI?: ({nativeEvent: {eventCount, target, text}}) => void;
 }
 
 const styles = StyleSheet.create({
@@ -71,7 +68,6 @@ const InputComponent = (props: Props) => {
     name,
     styleInput,
     maxLength,
-    onBlurI,
   } = props;
   const [isShowPassword, setIsShowPassword] = useState<boolean>(
     isPassword ?? false, // neu undefind la false

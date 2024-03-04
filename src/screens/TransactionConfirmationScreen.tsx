@@ -13,6 +13,7 @@ import {
   TransactionInformation,
 } from '../components';
 import {observer} from 'mobx-react';
+import {useStore} from '../store';
 
 const styles = StyleSheet.create({
   sectionComponent: {
@@ -40,6 +41,29 @@ const styles = StyleSheet.create({
 });
 
 const TransactionConfirmationScreen = ({navigation}: any) => {
+  const {transferStore} = useStore();
+
+  console.log('transferStore:: ', transferStore.accountInfoMoneyTransfer);
+  console.log(
+    'transferStore to title:: ',
+    transferStore.accountInfoBeneficiary.title,
+  );
+
+  console.log(
+    'transferStore to bankName:: ',
+    transferStore.bankInfoBeneficiary.bankName,
+  );
+
+  console.log(
+    'transferStore to bankName:: ',
+    transferStore.bankInfoBeneficiary.description,
+  );
+
+  const accountTranferToInfo = {
+    name: transferStore.accountInfoBeneficiary.title,
+    bankName: transferStore.bankInfoBeneficiary.bankName,
+  };
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -52,7 +76,10 @@ const TransactionConfirmationScreen = ({navigation}: any) => {
         <SectionComponent>
           <TotalAmount />
           <SpaceComponent height={16} />
-          <TransactionInformation />
+          <TransactionInformation
+            accountTranferFromInfo={transferStore.accountInfoMoneyTransfer}
+            accountTranferToInfo
+          />
           <SpaceComponent height={16} />
         </SectionComponent>
       </ContainerComponent>

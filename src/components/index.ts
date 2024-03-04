@@ -16,9 +16,11 @@ import AccountNameCard from './transferToBankAccount/AccountNameCard';
 import AccountBeneficiaryNumberSelect from './transferToBankAccount/AccountBeneficiaryNumberSelect';
 import AmountCard from './transferToBankAccount/AmountCard';
 import CurrencyCard from './transferToBankAccount/CurrencyCard';
-import CustomNameCard from './transferToBankAccount/CustomNameCard';
+
 import DescriptionCard from './transferToBankAccount/DescriptionCard';
 import RowSetColor from './transferToBankAccount/RowSetColor';
+import CustomerNameSelect from './transferToBankAccount/CustomerNameSelect';
+import TextError from './TextError';
 
 export {
   RowComponent,
@@ -36,8 +38,9 @@ export {
   TransactionInformationCard,
   TransactionInformationDetailCard,
   BottomSheetComponent,
+  TextError,
   CurrencyCard,
-  CustomNameCard,
+  CustomerNameSelect,
   AccountBeneficiaryNumberSelect,
   AccountNameCard,
   AmountCard,

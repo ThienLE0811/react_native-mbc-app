@@ -73,17 +73,33 @@
 
 // export default observer(CurrencyCard);
 
-import React, {useState} from 'react';
+import { observable } from 'mobx';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
+
+interface Props {
+  onSelect: (item: {label: string, value: string})=> void
+}
 
 const data = [
   {label: 'KHR', value: '1'},
   {label: 'USD', value: '2'},
 ];
 
-const DropdownComponent = () => {
+
+
+const DropdownComponent = (props: Props) => {
+  const {onSelect} = props
   const [value, setValue] = useState(data[0]);
+  
+
+
+  useEffect(()=>{
+    onSelect(data[0])
+  },[])
+
+
 
   const renderItem = item => {
     return (
@@ -108,8 +124,9 @@ const DropdownComponent = () => {
       placeholder="Select item"
       searchPlaceholder="Search..."
       value={value}
-      onChange={item => {
+      onChange={(item: {label: string, value: string}) => {
         setValue(item.value);
+        onSelect(item)
       }}
       renderRightIcon={() => (
         <Image
@@ -126,9 +143,9 @@ const DropdownComponent = () => {
       renderItem={renderItem}
     />
   );
-};
+}
 
-export default DropdownComponent;
+export default DropdownComponent ;
 
 const styles = StyleSheet.create({
   dropdown: {

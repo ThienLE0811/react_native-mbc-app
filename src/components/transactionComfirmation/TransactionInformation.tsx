@@ -6,18 +6,21 @@ import {
 } from '..';
 
 interface Props {
-  accountTranferFromInfo: any;
-  accountTranferToInfo: any;
+  accountTranferFromInfo: AccountInfoMoneyTransfer;
+  accountTransferToInfo: AccountTransferToInfo;
+  transactionInfoDetail: TransactionInfoDetail 
 }
 
 const TransactionInformation = (props: Props) => {
-  const {accountTranferInfo} = props;
+  const {accountTranferFromInfo, accountTransferToInfo, transactionInfoDetail} = props;
+
+  console.log("account transfer to info:: ", accountTransferToInfo)
 
   return (
     <>
-      <TransactionInformationCard />
+      <TransactionInformationCard accountTranferFromInfo={accountTranferFromInfo} accountTransferToInfo={accountTransferToInfo}/>
       <SpaceComponent height={16} />
-      <TransactionInformationDetailCard />
+      <TransactionInformationDetailCard transactionInfoDetail={transactionInfoDetail}/>
     </>
   );
 };

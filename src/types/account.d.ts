@@ -20,3 +20,14 @@ interface AccountInfoMoneyTransfer {
   amount: string;
   typeMoney: string;
 }
+
+interface AccountTransferToInfo {
+  name: string
+  bankName: string
+  numberBank: string
+}
+
+interface TransactionInfoDetail {
+  description: string,
+  amount: string
+}

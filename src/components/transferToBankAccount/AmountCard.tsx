@@ -44,19 +44,19 @@ const styles = StyleSheet.create({
 });
 
 const AmountCard = ({
-  onSelect,
+  onBlur,
   control,
   name,
   register,
 }: {
-  onSelect: (item: AccountInfoBeneficiary) => void;
+  onBlur: (value: string) => void;
   control: Control<{}, any, {}>;
   name: string;
   defaultValue?: number;
   register: UseFormRegister<any>;
 }) => {
   register(name, {
-    onBlur: e => console.log('hê nhô:: ', e),
+    onBlur: (e) => onBlur(e.target.value),
   });
 
   return (

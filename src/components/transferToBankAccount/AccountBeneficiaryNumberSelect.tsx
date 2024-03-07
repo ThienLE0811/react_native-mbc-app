@@ -103,6 +103,8 @@ const renderItem = ({
   item: AccountInfoBeneficiary;
   onSelect: (item: any) => void;
 }) => {
+
+  console.log("item:: ",item)
   return (
     <TouchableOpacity onPress={() => onSelect(item)} activeOpacity={0.8}>
       <CardInfo

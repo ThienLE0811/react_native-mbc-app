@@ -10,7 +10,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const TransactionInformationDetailCard = () => {
+interface Props {
+  transactionInfoDetail: TransactionInfoDetail 
+}
+
+const TransactionInformationDetailCard = (props: Props) => {
+  const {transactionInfoDetail} = props
+
+  console.log("transactionInfoDetail:: ",transactionInfoDetail)
+
   return (
     <CardComponent styles={styles.cardComponent}>
       <RowComponent justify="space-between">
@@ -37,7 +45,7 @@ const TransactionInformationDetailCard = () => {
         />
 
         <TextComponent
-          text="180,000,000 VND"
+          text={transactionInfoDetail.amount}
           weight="600"
           size={12}
           color={appColors.primary}
@@ -52,7 +60,7 @@ const TransactionInformationDetailCard = () => {
           weight="400"
         />
         <TextComponent
-          text="CUSTOMER NAME transfers"
+          text={transactionInfoDetail.description}
           weight="600"
           size={12}
           color={appColors.title2}

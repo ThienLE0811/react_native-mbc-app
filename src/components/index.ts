@@ -15,12 +15,13 @@ import TransactionInformationDetailCard from './transactionComfirmation/Transact
 import AccountNameCard from './transferToBankAccount/AccountNameCard';
 import AccountBeneficiaryNumberSelect from './transferToBankAccount/AccountBeneficiaryNumberSelect';
 import AmountCard from './transferToBankAccount/AmountCard';
-import CurrencyCard from './transferToBankAccount/CurrencyCard';
+
 
 import DescriptionCard from './transferToBankAccount/DescriptionCard';
 import RowSetColor from './transferToBankAccount/RowSetColor';
 import CustomerNameSelect from './transferToBankAccount/CustomerNameSelect';
 import TextError from './TextError';
+import DropdownComponent from './transferToBankAccount/DropdownComponent';
 
 export {
   RowComponent,
@@ -39,7 +40,7 @@ export {
   TransactionInformationDetailCard,
   BottomSheetComponent,
   TextError,
-  CurrencyCard,
+  DropdownComponent,
   CustomerNameSelect,
   AccountBeneficiaryNumberSelect,
   AccountNameCard,

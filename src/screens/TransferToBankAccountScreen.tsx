@@ -7,9 +7,9 @@ import {
   AmountCard,
   ButtonComponent,
   ContainerComponent,
-  CurrencyCard,
   CustomerNameSelect,
   DescriptionCard,
+  DropdownComponent,
   HeaderComponent,
   SectionComponent,
   SpaceComponent,
@@ -113,11 +113,22 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
     });
   };
 
+  const handleChangeAmountBeneficiary = (amount: string)=> {
+    transferStore.setAmountBeneficiary(amount)
+  }
+
   const handleChangeAccountInfoMoneyTransfer = (
     info: AccountInfoMoneyTransfer,
   ) => {
     transferStore.setAccountInfoMoneyTransfer(info);
   };
+
+  const handleSelectTypeMoney = (info : {label: string, value: string})=>{
+    transferStore.setTypeMoney(info)
+  }
+
+  
+
 
   return (
     <>
@@ -163,9 +174,10 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
                   control={control}
                   name={'amount'}
                   register={register}
+                  onBlur={handleChangeAmountBeneficiary}
                 />
               </View>
-              <CurrencyCard />
+              <DropdownComponent onSelect={handleSelectTypeMoney}/>
             </View>
             <SpaceComponent height={16} />
             <DescriptionCard

@@ -43,26 +43,32 @@ const styles = StyleSheet.create({
 const TransactionConfirmationScreen = ({navigation}: any) => {
   const {transferStore} = useStore();
 
-  console.log('transferStore:: ', transferStore.accountInfoMoneyTransfer);
+  console.log('transferStore from:: ', transferStore.accountInfoMoneyTransfer);
   console.log(
-    'transferStore to title:: ',
-    transferStore.accountInfoBeneficiary.title,
+    'transferStore:: ',
+    transferStore.accountInfoBeneficiary,
   );
 
   console.log(
-    'transferStore to bankName:: ',
-    transferStore.bankInfoBeneficiary.bankName,
+    'transferStore to accountNumberBeneficiary:: ',
+    transferStore.accountNumberBeneficiary
   );
 
   console.log(
-    'transferStore to bankName:: ',
+    'transferStore to description:: ',
     transferStore.bankInfoBeneficiary.description,
   );
 
-  const accountTranferToInfo = {
+  const accountTransferToInfo: AccountTransferToInfo = {
     name: transferStore.accountInfoBeneficiary.title,
     bankName: transferStore.bankInfoBeneficiary.bankName,
+    numberBank: transferStore.accountInfoBeneficiary.numberBank || "",
   };
+
+  const transactionInfoDetail:TransactionInfoDetail = {
+    amount: transferStore.amountBeneficiary ,
+    description: transferStore.accountInfoBeneficiary.description || ""
+  }
 
   const goBack = () => {
     navigation.goBack();
@@ -74,11 +80,14 @@ const TransactionConfirmationScreen = ({navigation}: any) => {
 
       <ContainerComponent styles={styles.containerComponent}>
         <SectionComponent>
-          <TotalAmount />
+          <TotalAmount totalAmount={transferStore.amountBeneficiary} typeMoney={transferStore.typeMoney.label}/>
           <SpaceComponent height={16} />
           <TransactionInformation
             accountTranferFromInfo={transferStore.accountInfoMoneyTransfer}
-            accountTranferToInfo
+            accountTransferToInfo={
+              accountTransferToInfo
+            }
+            transactionInfoDetail={transactionInfoDetail}
           />
           <SpaceComponent height={16} />
         </SectionComponent>

@@ -49,9 +49,11 @@ const styles = StyleSheet.create({
 });
 
 const TransactionInformationCard = ({
-  accountTranferInfo,
+  accountTranferFromInfo,
+  accountTransferToInfo
 }: {
-  accountTranferInfo: any;
+  accountTranferFromInfo: AccountInfoMoneyTransfer;
+  accountTransferToInfo :AccountTransferToInfo
 }) => {
   return (
     <View>
@@ -74,14 +76,14 @@ const TransactionInformationCard = ({
             />
             <SpaceComponent height={2} />
             <TextComponent
-              text="CUSTOMER NAME"
+              text={accountTranferFromInfo.userName}
               size={14}
               color={appColors.title2}
               weight="700"
             />
 
             <TextComponent
-              text="03701056378 | KHR"
+              text={`${accountTranferFromInfo.numberBank} | ${accountTranferFromInfo.typeMoney}`}
               color={appColors.gray3}
               size={14}
               weight="400"
@@ -107,14 +109,14 @@ const TransactionInformationCard = ({
             />
             <SpaceComponent height={2} />
             <TextComponent
-              text="CUSTOMER NAME"
+              text={accountTransferToInfo.name}
               size={14}
               color={appColors.title2}
               weight="700"
             />
 
             <TextComponent
-              text="8556999888 | Canadia Bank"
+              text={`${accountTransferToInfo.numberBank} | ${accountTransferToInfo.bankName}`}
               color={appColors.gray3}
               size={14}
               weight="400"

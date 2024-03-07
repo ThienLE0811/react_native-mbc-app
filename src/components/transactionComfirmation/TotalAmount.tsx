@@ -3,7 +3,13 @@ import {SpaceComponent, TextComponent} from '..';
 import {View} from 'react-native';
 import {appColors} from '../../constansts/appColors';
 
-const TotalAmount = () => {
+interface Props {
+  totalAmount: string
+  typeMoney: string
+}
+
+const TotalAmount = (props: Props) => {
+  const {totalAmount, typeMoney} = props
   return (
     <View>
       <TextComponent
@@ -14,7 +20,7 @@ const TotalAmount = () => {
       />
       <SpaceComponent height={8} />
       <TextComponent
-        text="180,004,000 KHR"
+        text={`${totalAmount} ${typeMoney}`}
         color={appColors.title2}
         weight="600"
         size={24}

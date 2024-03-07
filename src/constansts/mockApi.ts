@@ -103,3 +103,5 @@ export const mockApiListAccountNumber: Array<AccountNumber> = [
     bankName: 'Canadia Bank 6',
   },
 ];
+
+export const AMOUNT_MAX:number = 20000

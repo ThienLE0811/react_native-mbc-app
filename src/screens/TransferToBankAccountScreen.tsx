@@ -24,7 +24,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {accountInfoMoneyTransfer} from '../constansts/mockApi';
-import {isEmptyObject} from '../utils';
+import {checkTypeTransfer, isEmptyObject} from '../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,7 +49,7 @@ const schema = yup.object().shape({
   accountNumber: yup
     .string()
     .matches(/^\d{12}$/, 'Account number must be at least 12 digits'),
-  amount: yup.number().min(4).max(200000000).required(),
+  amount: yup.number().min(4).max(900000000).required(),
   description: yup.string().max(64),
 });
 
@@ -91,7 +91,20 @@ const TransferToBankAccountScreen = ({navigation}: any) => {
         description: `${transferStore.accountInfoMoneyTransfer?.userName} transfers`,
       });
 
-    navigation.navigate('Transaction Comfirmation');
+      const amount = Number(transferStore.amountBeneficiary)
+
+    const channelRetail = ()=> {
+      navigation.navigate('Transaction Comfirmation');
+    }
+
+    const channelLargeValue = ()=> {
+      navigation.navigate('Settlement');
+    }
+
+    checkTypeTransfer(amount, channelRetail, channelLargeValue)
+
+
+    
   };
 
   const handleChangeAccountInfoBeneficiary = (info: AccountInfoBeneficiary) => {
